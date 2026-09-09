@@ -35,7 +35,7 @@ Semua respon API mengembalikan format JSON (Content-Type: application/json).
 1. AMBIL DATA DATA TITIK HOTSPOT
 --------------------------------
 Method : GET
-URL    : /api/hotspots
+URL    : /api/hotspot
 Fungsi : Mengambil daftar titik hotspot dalam bentuk Array JSON standar.
 
 [Query Parameters] (Semua Opsional)
@@ -47,7 +47,7 @@ Fungsi : Mengambil daftar titik hotspot dalam bentuk Array JSON standar.
 - min_kepercayaan : (Integer) Filter batas minimal tingkat kepercayaan.
 
 [Contoh Request]
-GET /api/hotspots?start_date=2026-09-01&end_date=2026-09-08&kabupaten=KUTAI&min_kepercayaan=8
+GET /api/hotspot?start_date=2026-09-01&end_date=2026-09-08&kabupaten=KUTAI&min_kepercayaan=8
 
 [Contoh Response Sukses]
 {
@@ -73,7 +73,7 @@ GET /api/hotspots?start_date=2026-09-01&end_date=2026-09-08&kabupaten=KUTAI&min_
 2. AMBIL DATA HOTSPOT (FORMAT GEOJSON UNTUK PETA)
 -------------------------------------------------
 Method : GET
-URL    : /api/hotspots/geojson
+URL    : /api/hotspot/geojson
 Fungsi : Mengambil data titik hotspot dalam format spesifik GeoJSON untuk 
          dirender langsung oleh Leaflet.js atau Mapbox.
 
@@ -107,7 +107,7 @@ Fungsi : Mengambil data titik hotspot dalam format spesifik GeoJSON untuk
 3. AMBIL RINGKASAN STATISTIK (UNTUK CHART/GRAFIK)
 -------------------------------------------------
 Method : GET
-URL    : /api/hotspots/summary
+URL    : /api/hotspot/summary
 Fungsi : Mengambil rekapitulasi jumlah hotspot dikelompokkan per kabupaten.
 
 [Query Parameters] (Opsional)

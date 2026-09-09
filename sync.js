@@ -27,18 +27,6 @@ async function runSync() {
   const dateStr = `${year}${month}${day}`;
   const dbDate = `${year}-${month}-${day}`;
 
-  // ==========================================================
-  // FITUR PENGINGAT: Cek apakah hari ini sudah sukses sync
-  // ==========================================================
-  const flagFile = 'last_sync.txt';
-  if (fs.existsSync(flagFile)) {
-    const lastSync = fs.readFileSync(flagFile, 'utf8').trim();
-    if (lastSync === dbDate) {
-      console.log(`[INFO - ${new Date().toISOString()}] Data ${dbDate} sudah pernah disync dengan sukses hari ini. Skip download.`);
-      return; // Script langsung berhenti di sini, nggak lanjut konek FTP
-    }
-  }
-
   const client = new ftp.Client();
   client.ftp.verbose = false;
 
@@ -59,7 +47,6 @@ async function runSync() {
       // ==========================================================
       // Kalau berhasil, catat tanggal hari ini di file pengingat
       // ==========================================================
-      fs.writeFileSync(flagFile, dbDate);
       console.log(`[SUKSES] Data hotspot ${dbDate} berhasil diupdate! (Flag diset)`);
 
     } catch (err) {

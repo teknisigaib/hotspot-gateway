@@ -23,7 +23,7 @@ const pool = new Pool({
 // ==========================================
 // ENDPOINT 1: AMBIL DATA TITIK HOTSPOT (MULTI FILTER)
 // ==========================================
-app.get('/api/hotspots', async (req, res) => {
+app.get('/api/hotspot', async (req, res) => {
   try {
     const { tanggal, start_date, end_date, kabupaten, kecamatan, min_kepercayaan } = req.query;
 
@@ -84,7 +84,7 @@ app.get('/api/hotspots', async (req, res) => {
 // ==========================================
 // ENDPOINT 2: DATA KHUSUS FORMAT GEOJSON (UNTUK PETA LEAFLET/MAPBOX)
 // ==========================================
-app.get('/api/hotspots/geojson', async (req, res) => {
+app.get('/api/hotspot/geojson', async (req, res) => {
   try {
     // Kita panggil endpoint utama pakai logika yang sama (bisa panggil fungsi terpisah sebenarnya, 
     // tapi biar simpel kita bikin query standar untuk hari ini/parameter tertentu)
@@ -134,7 +134,7 @@ app.get('/api/hotspots/geojson', async (req, res) => {
 // ==========================================
 // ENDPOINT 3: RINGKASAN STATISTIK (CHART)
 // ==========================================
-app.get('/api/hotspots/summary', async (req, res) => {
+app.get('/api/hotspot/summary', async (req, res) => {
   try {
     const { tanggal } = req.query;
     

@@ -20,10 +20,13 @@ const ftpConfig = {
 };
 
 async function runSync() {
-  const today = new Date();
-  const year = format(today, "yyyy");
-  const month = format(today, "MM");
-  const day = format(today, "dd");
+  // Server jalan di UTC, kita shift +7 Jam secara manual biar script pakai tanggal WIB
+  const now = new Date();
+  const todayWIB = new Date(now.getTime() + (7 * 60 * 60 * 1000));
+
+  const year = format(todayWIB, "yyyy");
+  const month = format(todayWIB, "MM");
+  const day = format(todayWIB, "dd");
   const dateStr = `${year}${month}${day}`;
   const dbDate = `${year}-${month}-${day}`;
 

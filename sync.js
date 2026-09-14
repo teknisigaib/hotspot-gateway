@@ -42,18 +42,38 @@ async function runSync() {
 
     console.log(`[${new Date().toISOString()}] Mencoba sinkronisasi data: ${dbDate}...`);
 
-    try {
-      await client.downloadTo(tempFile, ftpPath);
-      await processFile(tempFile, dbDate);
-      fs.unlinkSync(tempFile);
-      
-      // ==========================================================
-      // Kalau berhasil, catat tanggal hari ini di file pengingat
-      // ==========================================================
-      console.log(`[SUKSES] Data hotspot ${dbDate} berhasil diupdate! (Flag diset)`);
+    // ==========================================
+    // SISTEM AUTO-RETRY (MAKSIMAL 3 KALI COBA)
+    // ==========================================
+    let maxRetries = 3;
+    let success = false;
 
-    } catch (err) {
-      console.log(`[TUNDA] Folder/File tanggal ${dbDate} belum ada di FTP. Akan dicoba lagi jam berikutnya.`);
+    for (let i = 1; i <= maxRetries; i++) {
+      try {
+        console.log(`-> Percobaan ${i} download file dari FTP...`);
+        await client.downloadTo(tempFile, ftpPath);
+        
+        await processFile(tempFile, dbDate);
+        fs.unlinkSync(tempFile);
+        
+        // Kalau lu pake fitur flag, biarin aja baris di bawah ini
+        // fs.writeFileSync(flagFile, dbDate); 
+        
+        console.log(`[SUKSES] Data hotspot ${dbDate} berhasil diupdate!`);
+        success = true;
+        break; // Keluar dari loop karena udah sukses
+        
+      } catch (err) {
+        console.log(`   [ERROR DETAIL] ${err.message}`);
+        if (i < maxRetries) {
+          console.log(`   Menunggu 3 detik sebelum mencoba lagi...`);
+          await new Promise(res => setTimeout(res, 3000)); // Jeda 3 detik
+        }
+      }
+    }
+
+    if (!success) {
+      console.log(`[TUNDA] setelah ${maxRetries}x percobaan. Folder/File belum ada atau FTP sedang down.`);
     }
 
   } catch (err) {

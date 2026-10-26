@@ -84,7 +84,7 @@ async function runSync() {
   const day = String(todayWIB.getDate()).padStart(2, '0');
   const dateStr = `${year}${month}${day}`;
 
-  const ftpPath = `/himawari6/Hotspot/data/${year}/${month}/${day}/Hotspot_${dateStr}.txt`;
+  const ftpPath = `/himawari7/Hotspot/data/${year}/${month}/${day}/Hotspot_${dateStr}.txt`;
   const tempFile = `temp_sync_${dateStr}.txt`;
 
   console.log(`\n==============================================`);
